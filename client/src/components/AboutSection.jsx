@@ -7,7 +7,7 @@ export default function AboutSection() {
         <div className="about-text">
           <h2>About</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+            Natna empowers the youth and communities in need by providing reliable access to mutual aid, education, medical support and avenues for leadership and sovereignty to flourish from within.
           </p>
           <p>
             Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.

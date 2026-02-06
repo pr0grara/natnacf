@@ -7,11 +7,11 @@ export default function Header() {
       <div className="container nav-bar">
         <Link to="/" className="logo">Natna</Link>
         <nav className="nav-links">
-          <Link to="/work">Work</Link>
-          <Link to="/missions">Missions</Link>
-          <Link to="/about">About</Link>
+          <Link to="/work">Home</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/missions">Programs & Projects</Link>
           <Link to="/donate">Donate</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">Contact Us</Link>
         </nav>
       </div>
     </header>
