@@ -1,0 +1,34 @@
+
+> natna-server@0.1.0 start
+> node index.js
+
+node:internal/modules/cjs/loader:928
+  throw err;
+  ^
+
+Error: Cannot find module 'node:async_hooks'
+Require stack:
+- /Users/arabaghdassarian/Desktop/Work/natna/server/node_modules/mongoose/lib/index.js
+- /Users/arabaghdassarian/Desktop/Work/natna/server/node_modules/mongoose/index.js
+- /Users/arabaghdassarian/Desktop/Work/natna/server/models/User.js
+- /Users/arabaghdassarian/Desktop/Work/natna/server/routes/api.js
+- /Users/arabaghdassarian/Desktop/Work/natna/server/index.js
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:925:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:769:27)
+    at Module.require (node:internal/modules/cjs/loader:997:19)
+    at require (node:internal/modules/cjs/helpers:92:18)
+    at Object.<anonymous> (/Users/arabaghdassarian/Desktop/Work/natna/server/node_modules/mongoose/lib/index.js:43:31)
+    at Module._compile (node:internal/modules/cjs/loader:1108:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1137:10)
+    at Module.load (node:internal/modules/cjs/loader:973:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:813:14)
+    at Module.require (node:internal/modules/cjs/loader:997:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/arabaghdassarian/Desktop/Work/natna/server/node_modules/mongoose/lib/index.js',
+    '/Users/arabaghdassarian/Desktop/Work/natna/server/node_modules/mongoose/index.js',
+    '/Users/arabaghdassarian/Desktop/Work/natna/server/models/User.js',
+    '/Users/arabaghdassarian/Desktop/Work/natna/server/routes/api.js',
+    '/Users/arabaghdassarian/Desktop/Work/natna/server/index.js'
+  ]
+}

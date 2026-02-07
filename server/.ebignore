@@ -1,0 +1,21 @@
+# Ignore everything by default (then whitelist what we need)
+**/*
+
+# Un-ignore the project files that Elastic Beanstalk needs
+!.ebextensions/
+!Procfile
+!package.json
+!index.js
+!dist/**
+
+# Exclude local dev stuff
+node_modules/
+client/
+*.log
+.env
+.vscode/
+.DS_Store
+.idea/
+
+# Ignore git
+.git/
