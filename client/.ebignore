@@ -1,0 +1,15 @@
+# Ignore everything by default
+**/*
+
+# Include necessary files
+!package.json
+!Procfile
+!dist/**
+
+# Exclude dev files
+node_modules/
+src/
+.vscode/
+.DS_Store
+*.log
+.git/
