@@ -6,13 +6,15 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container">
         <div className="footer-inner">
-          <div className="footer-left">© {new Date().getFullYear()} Natna</div>
+          <div className="footer-left">
+            <p>© {new Date().getFullYear()} NATNA Community Foundation</p>
+          </div>
           <nav className="footer-nav">
-            <Link to="/work">Work</Link>
-            <Link to="/missions">Missions</Link>
+            <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/donate">Donate</Link>
+            <Link to="/missions">Programs</Link>
             <Link to="/contact">Contact</Link>
+            <Link to="/donate">Donate</Link>
           </nav>
         </div>
       </div>

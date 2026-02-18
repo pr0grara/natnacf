@@ -1,5 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build output (keep only latest)
+# server/dist/ is committed but clean old hashes
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Source videos (keep GIFs only)
+client/src/assets/*.mp4
+
+# Unused logo variants
+client/src/assets/natna_logo_header.png
