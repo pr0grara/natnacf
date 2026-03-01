@@ -143,6 +143,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -152,6 +154,8 @@ body {
   font-size: font-size(sm);
   line-height: 1.6;
   letter-spacing: -0.01em;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 main {
@@ -168,6 +172,9 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   color: color(text-primary);
   margin-bottom: space(4);
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
 h1 {
@@ -245,6 +252,9 @@ p {
   max-width: $container-max;
   margin: 0 auto;
   padding: 0 space(6);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   
   &.wide {
     max-width: $container-wide;
@@ -255,7 +265,8 @@ p {
   }
   
   @media (max-width: map-get($breakpoints, sm)) {
-    padding: 0 space(3);
+    padding: 0 space(4);
+    margin: 0;
   }
 }
 
@@ -283,7 +294,7 @@ p {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: $container-max;
+  max-width: $container-wide;
   margin: 0 auto;
   padding: 0 space(6);
   
@@ -312,6 +323,16 @@ p {
     max-width: 48px;
     max-height: 48px;
   }
+  
+  @media (max-width: 414px) {
+    max-width: 40px;
+    max-height: 40px;
+  }
+  
+  @media (max-width: 375px) {
+    max-width: 36px;
+    max-height: 36px;
+  }
 }
 
 .logo-text {
@@ -329,6 +350,14 @@ p {
   @media (max-width: map-get($breakpoints, md)) {
     font-size: 1.25rem;
   }
+  
+  @media (max-width: 414px) {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 375px) {
+    font-size: 1rem;
+  }
 }
 
 .logo-subtitle {
@@ -341,12 +370,21 @@ p {
   @media (max-width: map-get($breakpoints, md)) {
     font-size: 0.6rem;
   }
+  
+  @media (max-width: 414px) {
+    font-size: 0.55rem;
+  }
+  
+  @media (max-width: 375px) {
+    font-size: 0.5rem;
+  }
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: space(8);
+  gap: space(6);
+  overflow-x: hidden;
   
   a {
     color: color(text-secondary);
@@ -355,8 +393,14 @@ p {
     font-weight: 500;
     letter-spacing: 0.01em;
     transition: all 0.3s ease;
-    padding: space(2) space(3);
-    border-radius: 6px;
+    padding: space(3) space(4);
+    border-radius: 8px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     
     &:hover {
       color: color(accent-primary);
@@ -371,12 +415,176 @@ p {
   }
   
   @media (max-width: map-get($breakpoints, md)) {
-    gap: space(4);
+    gap: space(1);
     
     a {
       font-size: font-size(xs);
-      padding: space(1) space(2);
+      padding: space(2) space(2);
+      min-height: 44px;
     }
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    gap: space(1);
+    
+    a {
+      font-size: font-size(xs);
+      padding: space(2) space(2);
+      min-height: 44px;
+    }
+  }
+}
+
+// Mobile Navigation System
+.desktop-nav {
+  @media (max-width: map-get($breakpoints, md)) {
+    display: none;
+  }
+}
+
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  transition: all 0.3s ease;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    display: flex;
+  }
+  
+  .hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: color(text-primary);
+    margin: 3px 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
+  }
+  
+  &.open .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+  
+  &.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  
+  &.open .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:focus {
+    outline: 2px solid color(accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  @media (min-width: map-get($breakpoints, md) + 1px) {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: space(6);
+  text-align: center;
+  padding: space(8);
+  
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: font-size(xl);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: space(4) space(6);
+    border-radius: 12px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    width: 280px;
+    max-width: 90vw;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: color(accent-light);
+      transform: translateY(0) scale(1.05);
+    }
+    
+    &:focus {
+      outline: 2px solid color(accent-light);
+      outline-offset: 2px;
+    }
+    
+    // Staggered animation
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    &:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+    &:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+  }
+}
+
+.mobile-menu-overlay.open .mobile-nav a {
+  animation: slideInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes slideInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -573,6 +781,9 @@ p {
 
 .section {
   padding: space(20) 0;
+  overflow-x: hidden;
+  max-width: 100vw;
+  box-sizing: border-box;
   
   &.alt {
     background: color(secondary-bg);
@@ -601,6 +812,15 @@ p {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: space(8);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: space(6);
+  }
   
   @media (max-width: map-get($breakpoints, sm)) {
     grid-template-columns: 1fr;
@@ -650,11 +870,22 @@ p {
 .portfolio-body {
   padding: space(8);
   
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(5);
+  }
+  
   h3 {
     color: color(text-primary);
     margin-bottom: space(4);
     font-size: font-size(xl);
     font-weight: 600;
+    hyphens: none;
+    word-break: normal;
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(lg);
+      line-height: 1.3;
+    }
   }
   
   p {
@@ -662,6 +893,10 @@ p {
     font-size: font-size(md);
     line-height: 1.6;
     margin-bottom: space(4);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(sm);
+    }
     
     &:last-of-type {
       margin-bottom: space(6);
@@ -759,6 +994,11 @@ p {
   background: white;
   text-align: center;
   
+  .container {
+    max-width: 100%;
+    padding: 0 space(6);
+  }
+  
   h2 {
     font-size: font-size(3xl);
     font-weight: 700;
@@ -772,17 +1012,22 @@ p {
 }
 
 .stats-grid {
-  display: flex;
-  justify-content: center;
-  gap: space(16);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: space(8);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
   
   @media (max-width: map-get($breakpoints, md)) {
-    flex-wrap: wrap;
-    gap: space(10);
+    grid-template-columns: repeat(2, 1fr);
+    gap: space(6);
   }
   
   @media (max-width: map-get($breakpoints, sm)) {
-    gap: space(8);
+    gap: space(4);
+    padding: 0 space(2);
   }
 }
 
@@ -790,7 +1035,7 @@ p {
   text-align: center;
   
   .stat-number {
-    font-size: font-size(5xl);
+    font-size: font-size(4xl);
     font-weight: 700;
     color: #3b5bdb;
     display: block;
@@ -798,15 +1043,15 @@ p {
     margin-bottom: space(2);
     
     @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(4xl);
+      font-size: font-size(2xl);
     }
   }
   
   .stat-label {
     color: color(text-secondary);
-    font-size: font-size(sm);
+    font-size: font-size(xs);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     font-weight: 500;
   }
 }
@@ -844,8 +1089,17 @@ p {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: space(6);
   margin-top: space(12);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
   
   @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: space(4);
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
     grid-template-columns: 1fr;
     gap: space(4);
   }
@@ -1156,6 +1410,27 @@ p {
 .bg-primary { background: color(primary-bg); }
 .bg-secondary { background: color(secondary-bg); }
 .bg-surface { background: color(surface); }
+
+// Mobile-first utility classes
+.mobile-safe {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: none;
+}
+
+// Ensure all grid containers are mobile-safe
+[class*="grid"], 
+[class*="row"], 
+.flex, 
+.d-flex,
+.container,
+.section {
+  @extend .mobile-safe;
+}
 
 // Card component
 .card {
@@ -2063,6 +2338,25 @@ html {
 .impact-donate {
   padding: space(20) 0;
   background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
+  overflow-x: hidden;
+  max-width: 100vw;
+  box-sizing: border-box;
+  
+  .container {
+    width: 100%;
+    max-width: $container-max;
+    margin: 0 auto;
+    padding: 0 space(6);
+    box-sizing: border-box;
+    
+    @media (max-width: map-get($breakpoints, md)) {
+      padding: 0 space(4);
+    }
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      padding: 0 space(4);
+    }
+  }
 }
 
 .impact-donate-grid {
@@ -2070,6 +2364,10 @@ html {
   grid-template-columns: 1fr 1fr;
   gap: space(16);
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
   
   @media (max-width: map-get($breakpoints, md)) {
     grid-template-columns: 1fr;
@@ -2079,17 +2377,30 @@ html {
 }
 
 .impact-side {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
   h2 {
     font-size: font-size(3xl);
     font-weight: 700;
     color: color(text-primary);
     margin-bottom: space(2);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(2xl);
+    }
   }
   
   .impact-subtitle {
     color: color(text-secondary);
     margin-bottom: space(8);
     font-size: font-size(base);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(sm);
+      margin-bottom: space(6);
+    }
   }
 }
 
@@ -2097,24 +2408,41 @@ html {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: space(6);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
   
   @media (max-width: map-get($breakpoints, md)) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: space(4);
+    justify-items: center;
+    padding: 0 space(2);
   }
   
   @media (max-width: map-get($breakpoints, sm)) {
-    grid-template-columns: repeat(2, 1fr);
+    gap: space(3);
+    padding: 0 space(1);
   }
 }
 
 .stat-item {
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: none;
+  
   .stat-num {
     display: block;
     font-size: font-size(3xl);
     font-weight: 700;
     color: #3b5bdb;
     line-height: 1.1;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     
     @media (max-width: map-get($breakpoints, sm)) {
       font-size: font-size(2xl);
@@ -2128,6 +2456,20 @@ html {
     text-transform: uppercase;
     letter-spacing: 0.02em;
     margin-top: space(1);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: none;
+    max-width: 100%;
+    
+    @media (max-width: map-get($breakpoints, md)) {
+      font-size: font-size(xs);
+      letter-spacing: 0.01em;
+    }
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(xs);
+      letter-spacing: 0;
+    }
   }
 }
 
@@ -2137,18 +2479,36 @@ html {
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(6);
+    border-radius: 12px;
+    margin: 0 auto;
+  }
   
   h2 {
     font-size: font-size(2xl);
     font-weight: 700;
     color: color(text-primary);
     margin-bottom: space(2);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(xl);
+    }
   }
   
   .donate-subtitle {
     color: color(text-secondary);
     margin-bottom: space(6);
     font-size: font-size(base);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(sm);
+      margin-bottom: space(4);
+    }
   }
 }
 
@@ -2157,6 +2517,13 @@ html {
   gap: space(3);
   justify-content: center;
   margin-bottom: space(4);
+  width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    gap: space(2);
+    flex-wrap: nowrap;
+  }
 }
 
 .donate-amount {
@@ -2170,6 +2537,15 @@ html {
   text-decoration: none;
   transition: all 0.2s ease;
   min-width: 90px;
+  text-align: center;
+  box-sizing: border-box;
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(3) space(4);
+    font-size: font-size(md);
+    min-width: 70px;
+    flex: 1;
+  }
   
   &:hover {
     border-color: #3b5bdb;
@@ -2192,4 +2568,548 @@ html {
   font-size: font-size(xs);
   color: color(text-muted);
   margin: 0;
+}
+
+// Mobile-first donate form visibility
+.donate-form-mobile {
+  display: none;
+  text-align: center;
+  margin-bottom: space(6);
+  padding: space(5);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  width: 100%;
+  
+  h2 {
+    font-size: font-size(lg);
+    margin-bottom: space(4);
+    color: color(text-primary);
+  }
+  
+  .donate-buttons {
+    display: flex;
+    gap: space(2);
+    justify-content: center;
+    margin-bottom: space(3);
+  }
+  
+  .donate-btn {
+    flex: 1;
+    padding: space(3) space(2);
+    font-size: font-size(md);
+    min-width: auto;
+  }
+  
+  .donate-btn-custom {
+    width: 100%;
+    padding: space(2) space(4);
+    font-size: font-size(sm);
+    margin-bottom: space(3);
+  }
+  
+  .donate-note {
+    font-size: font-size(xs);
+    margin: 0;
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    display: block;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(4);
+    margin-bottom: space(4);
+    
+    h2 {
+      font-size: font-size(md);
+      margin-bottom: space(3);
+    }
+    
+    .donate-btn {
+      padding: space(2) space(1);
+      font-size: font-size(sm);
+    }
+  }
+}
+
+.donate-form-desktop {
+  display: block;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    display: none;
+  }
+}
+
+// Team Bios Section
+.team-section {
+  margin-top: space(16);
+  
+  h2 {
+    text-align: center;
+    margin-bottom: space(10);
+  }
+}
+
+.team-grid {
+  display: flex;
+  flex-direction: column;
+  gap: space(10);
+}
+
+.team-member {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: space(8);
+  align-items: start;
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.team-photo {
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: shadow(lg);
+  }
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.team-photo-placeholder {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b5bdb 0%, #2563eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: font-size(4xl);
+  font-weight: 700;
+  color: white;
+  box-shadow: shadow(lg);
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    width: 150px;
+    height: 150px;
+    font-size: font-size(3xl);
+  }
+}
+
+.team-info {
+  h3 {
+    font-size: font-size(2xl);
+    margin-bottom: space(4);
+    color: color(text-primary);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(xl);
+    }
+  }
+  
+  p {
+    font-size: font-size(md);
+    line-height: 1.7;
+    color: color(text-secondary);
+    margin-bottom: space(4);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(sm);
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Zelle Payment Option
+.donate-divider {
+  display: flex;
+  align-items: center;
+  margin: space(4) 0;
+  
+  span {
+    padding: 0 space(3);
+    color: color(text-muted);
+    font-size: font-size(sm);
+  }
+  
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: color(border-light);
+  }
+}
+
+.zelle-btn {
+  width: 100%;
+  padding: space(3) space(4);
+  font-size: font-size(md);
+  font-weight: 600;
+  border: 2px solid #6D1ED4;
+  border-radius: 10px;
+  background: white;
+  color: #6D1ED4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: space(2);
+  margin-bottom: space(3);
+  
+  &:hover {
+    background: #6D1ED4;
+    color: white;
+  }
+  
+  .zelle-logo {
+    font-weight: 800;
+    font-style: italic;
+  }
+}
+
+.zelle-info {
+  background: #f8f5ff;
+  border: 1px solid #e0d4f7;
+  border-radius: 12px;
+  padding: space(4);
+  margin-bottom: space(4);
+  text-align: center;
+  
+  p {
+    font-size: font-size(sm);
+    color: color(text-secondary);
+    margin-bottom: space(2);
+    
+    &:first-child {
+      font-weight: 500;
+      color: color(text-primary);
+    }
+  }
+  
+  .zelle-note {
+    font-size: font-size(xs);
+    color: color(text-muted);
+    margin-bottom: 0;
+  }
+}
+
+.zelle-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: space(2);
+  background: white;
+  border: 1px solid #e0d4f7;
+  border-radius: 8px;
+  padding: space(2) space(3);
+  margin-bottom: space(3);
+  
+  span {
+    font-family: monospace;
+    font-size: font-size(sm);
+    color: #6D1ED4;
+    font-weight: 500;
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    flex-direction: column;
+    gap: space(2);
+    
+    span {
+      font-size: font-size(xs);
+    }
+  }
+}
+
+.copy-btn {
+  padding: space(1) space(3);
+  font-size: font-size(xs);
+  font-weight: 500;
+  border: 1px solid #6D1ED4;
+  border-radius: 6px;
+  background: white;
+  color: #6D1ED4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #6D1ED4;
+    color: white;
+  }
+}
+
+// Project Detail Page
+.project-page {
+  padding: space(8) 0 space(20) 0;
+  background: color(primary-bg);
+  min-height: calc(100vh - space(20));
+}
+
+.back-link {
+  display: inline-block;
+  color: color(accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: space(6);
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateX(-4px);
+  }
+}
+
+.project-header {
+  text-align: center;
+  margin-bottom: space(12);
+  
+  h1 {
+    font-size: font-size(4xl);
+    margin-bottom: space(4);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(3xl);
+    }
+  }
+  
+  .project-subtitle {
+    font-size: font-size(lg);
+    color: color(text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.project-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.project-intro,
+.project-features,
+.project-impact,
+.project-cta {
+  margin-bottom: space(12);
+  
+  h2 {
+    font-size: font-size(2xl);
+    margin-bottom: space(6);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(xl);
+    }
+  }
+  
+  p {
+    font-size: font-size(md);
+    line-height: 1.7;
+    color: color(text-secondary);
+    margin-bottom: space(4);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      font-size: font-size(sm);
+    }
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: space(6);
+  
+  @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-card {
+  background: color(surface);
+  border: 1px solid color(border-light);
+  border-radius: 16px;
+  padding: space(6);
+  
+  h3 {
+    font-size: font-size(lg);
+    margin-bottom: space(3);
+    display: flex;
+    align-items: center;
+    gap: space(2);
+  }
+  
+  .feature-icon {
+    color: color(primary);
+    flex-shrink: 0;
+  }
+  
+  p {
+    font-size: font-size(sm);
+    margin-bottom: 0;
+  }
+}
+
+.project-cta {
+  text-align: center;
+  background: color(secondary-bg);
+  padding: space(10);
+  border-radius: 16px;
+  
+  p {
+    max-width: 500px;
+    margin: 0 auto space(6) auto;
+  }
+}
+
+.coming-soon {
+  color: color(text-muted) !important;
+  cursor: default;
+  
+  &::after {
+    content: none !important;
+  }
+}
+
+// Project Page Images
+.project-hero-image {
+  margin-bottom: space(10);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: shadow(xl);
+  
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: space(4);
+  margin-bottom: space(10);
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    grid-template-columns: 1fr;
+  }
+  
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: shadow(md);
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      height: 250px;
+    }
+  }
+}
+
+.phone-mockups {
+  display: flex;
+  justify-content: center;
+  gap: space(6);
+  margin-bottom: space(10);
+  padding: space(8) 0;
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    gap: space(3);
+    padding: space(4) 0;
+  }
+}
+
+.phone-frame {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 36px;
+  padding: 12px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  max-width: 280px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+  
+  @media (max-width: map-get($breakpoints, sm)) {
+    border-radius: 24px;
+    padding: 8px;
+    max-width: 160px;
+  }
+  
+  .phone-notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 24px;
+    background: #000;
+    border-radius: 12px;
+    z-index: 10;
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      width: 50px;
+      height: 16px;
+      top: 8px;
+      border-radius: 8px;
+    }
+  }
+  
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    display: block;
+    
+    @media (max-width: map-get($breakpoints, sm)) {
+      border-radius: 16px;
+    }
+  }
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  padding: space(4);
+  animation: fadeIn 0.2s ease;
+  
+  img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
