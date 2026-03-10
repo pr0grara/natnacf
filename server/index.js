@@ -31,6 +31,8 @@ app.use(helmet({
 
 // CORS restricted to authorized origins only
 const allowedOrigins = [
+  'https://natnacf.org',
+  'https://www.natnacf.org',
   'https://testing.natnacf.org',
   'http://localhost:3002', // Local development
   'http://localhost:3001', // Alternative local port
