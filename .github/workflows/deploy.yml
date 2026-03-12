@@ -1,0 +1,41 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build client
+        working-directory: client
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare deploy package
+        run: |
+          mkdir -p deploy
+          cp -r server/* deploy/
+          cp -r client/dist deploy/dist
+          cd deploy
+          zip -r ../app.zip . -x "node_modules/*"
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: natna
+          environment_name: natna-dev
+          region: ${{ secrets.AWS_REGION }}
+          version_label: ${{ github.sha }}
+          deployment_package: app.zip
+          wait_for_environment_recovery: 120
