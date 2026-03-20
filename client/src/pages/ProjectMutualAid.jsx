@@ -6,6 +6,10 @@ import finoVideo from '../assets/fino.mp4'
 import padsVideo from '../assets/reusable_pads.mp4'
 import cashVideo from '../assets/cash_disbursement.mp4'
 import educationGif from '../assets/natna_education.gif'
+import posterFlour from '../assets/poster_flour.jpg'
+import posterFino from '../assets/poster_fino.jpg'
+import posterPads from '../assets/poster_pads.jpg'
+import posterCash from '../assets/poster_cash.jpg'
 
 const initiatives = [
   {
@@ -14,14 +18,17 @@ const initiatives = [
     statLabel: 'of flour distributed',
     body: 'We were able to provide 100 kuntals (10,000 kilograms) of fino/flour to 400 households in Tembien, Tigray.',
     videos: [],
-    gallery: [flourVideo, finoVideo],
+    gallery: [
+      { src: flourVideo, poster: posterFlour },
+      { src: finoVideo, poster: posterFino },
+    ],
   },
   {
     title: 'Reusable Pads',
     stat: '2,500',
     statLabel: 'pads distributed',
     body: 'In displacement camps where sanitary products are nearly impossible to access, 833 women and girls had been relying on rags and unsafe alternatives. We distributed 2,500 reusable pads that will last up to two years and soap — helping restore dignity, safety, and peace of mind.',
-    videos: [padsVideo],
+    videos: [{ src: padsVideo, poster: posterPads }],
   },
   {
     title: 'Education Supplies',
@@ -36,7 +43,7 @@ const initiatives = [
     stat: 'Multiple',
     statLabel: 'disbursements to IDPs',
     body: 'Through multiple cash disbursements to IDP communities throughout Tigray, we have provided direct financial support to families in urgent need. While hardship is widespread, priority was given to the most marginalized — including elders, single mothers, people with disabilities, and parentless children.',
-    videos: [cashVideo],
+    videos: [{ src: cashVideo, poster: posterCash }],
   },
 ]
 
@@ -107,9 +114,10 @@ export default function ProjectMutualAid() {
                         controls
                         preload="metadata"
                         playsInline
+                        poster={v.poster}
                       >
                         <source
-                          src={v}
+                          src={v.src}
                           type="video/mp4"
                         />
                       </video>
@@ -124,9 +132,10 @@ export default function ProjectMutualAid() {
                         controls
                         preload="metadata"
                         playsInline
+                        poster={v.poster}
                       >
                         <source
-                          src={v}
+                          src={v.src}
                           type="video/mp4"
                         />
                       </video>
