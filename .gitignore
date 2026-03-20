@@ -28,8 +28,9 @@ Thumbs.db
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-# Source videos (keep GIFs only)
-client/src/assets/*.mp4
+# Unused source videos
+client/src/assets/instagram_donate.mp4
+client/src/assets/instagram_donate2.mp4
 
 # Unused logo variants
 client/src/assets/natna_logo_header.png

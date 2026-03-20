@@ -56,8 +56,8 @@ export default function Header() {
           <nav className="nav-links desktop-nav">
             <Link to="/">Home</Link>
             <Link to="/donate">Donate</Link>
-            <Link to="/about">About Us</Link>
             <Link to="/missions">Programs & Projects</Link>
+            <Link to="/about">About Us</Link>
             <Link to="/contact">Contact Us</Link>
           </nav>
 
@@ -80,8 +80,8 @@ export default function Header() {
         <nav className="mobile-nav">
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
           <Link to="/donate" onClick={() => setIsMobileMenuOpen(false)}>Donate</Link>
-          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           <Link to="/missions" onClick={() => setIsMobileMenuOpen(false)}>Programs & Projects</Link>
+          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
         </nav>
       </div>

@@ -16,6 +16,7 @@ import NotFound from './pages/NotFound'
 import Header from './components/Header'
 import Portfolio from './components/Portfolio'
 import ProjectNatnaAi from './pages/ProjectNatnaAi'
+import ProjectMutualAid from './pages/ProjectMutualAid'
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/work" element={<Work />} />
           <Route path="/missions" element={<Portfolio />} />
           <Route path="/projects/natna-ai" element={<ProjectNatnaAi />} />
+          <Route path="/projects/mutual-aid" element={<ProjectMutualAid />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/donate" element={<Donate />} />

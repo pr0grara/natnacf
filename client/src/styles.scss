@@ -2662,6 +2662,127 @@ html {
   margin-bottom: space(4);
 }
 
+// Mutual Aid Initiative Cards
+.aid-initiatives {
+  display: flex;
+  flex-direction: column;
+  gap: space(8);
+  margin: space(10) 0;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.aid-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: space(8);
+  align-items: center;
+  padding: space(8);
+  background: color(secondary-bg);
+  border-radius: 16px;
+
+  &:nth-child(even) {
+    direction: rtl;
+
+    > * {
+      direction: ltr;
+    }
+  }
+
+  &.no-video {
+    grid-template-columns: 1fr;
+    text-align: center;
+
+    .aid-stat {
+      justify-content: center;
+      margin-bottom: space(2);
+    }
+  }
+
+  .aid-gallery {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: space(4);
+    margin-top: space(4);
+
+    video {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: 1fr;
+    padding: space(6);
+
+    &:nth-child(even) {
+      direction: ltr;
+    }
+  }
+}
+
+.aid-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: space(1);
+  margin-bottom: space(3);
+  padding: space(1) space(3);
+  background: rgba(37, 99, 235, 0.08);
+  border-radius: 20px;
+}
+
+.aid-stat-number {
+  font-size: font-size(sm);
+  font-weight: 600;
+  color: color(accent-primary);
+}
+
+.aid-stat-label {
+  font-size: font-size(sm);
+  color: color(accent-primary);
+}
+
+.aid-left {
+  h3 {
+    font-size: font-size(2xl);
+    margin-bottom: space(4);
+    color: color(text-primary);
+  }
+
+  p {
+    font-size: font-size(md);
+    color: color(text-secondary);
+    line-height: 1.8;
+  }
+}
+
+.aid-image {
+  img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.aid-videos {
+  display: flex;
+  flex-direction: column;
+  gap: space(3);
+
+  video {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
 // Team Bios Section
 .team-section {
   margin-top: space(16);

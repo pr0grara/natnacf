@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const stats = [
   { number: '500+', label: 'Youth Empowered' },
-  { number: '25+', label: 'Communities' },
+  { number: '15+', label: 'Communities' },
   { number: '1,200+', label: 'Families Supported' },
-  { number: '50+', label: 'Programs' }
+  { number: '10+', label: 'Programs' }
 ]
 
 export default function ImpactDonate() {
