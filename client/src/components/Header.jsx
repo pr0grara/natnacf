@@ -55,10 +55,10 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="nav-links desktop-nav">
             <Link to="/">Home</Link>
+            <Link to="/donate">Donate</Link>
             <Link to="/about">About Us</Link>
             <Link to="/missions">Programs & Projects</Link>
             <Link to="/contact">Contact Us</Link>
-            <Link to="/donate">Donate</Link>
           </nav>
 
           {/* Mobile Hamburger Button */}
@@ -79,10 +79,10 @@ export default function Header() {
       <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav">
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <Link to="/donate" onClick={() => setIsMobileMenuOpen(false)}>Donate</Link>
           <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           <Link to="/missions" onClick={() => setIsMobileMenuOpen(false)}>Programs & Projects</Link>
           <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
-          <Link to="/donate" onClick={() => setIsMobileMenuOpen(false)}>Donate</Link>
         </nav>
       </div>
     </>

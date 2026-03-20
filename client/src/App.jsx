@@ -1,5 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
+}
 import Home from './pages/Home'
 import Work from './pages/Work'
 import About from './pages/About'
@@ -14,6 +20,7 @@ import ProjectNatnaAi from './pages/ProjectNatnaAi'
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <main className="container">
         <Routes>

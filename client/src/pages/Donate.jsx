@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FiCheck } from 'react-icons/fi'
 import donateGif from '../assets/donate_video.gif'
 import impactImage from '../assets/natna_impact.jpg'
@@ -8,7 +8,15 @@ export default function Donate() {
   const [copied, setCopied] = useState(false)
   
   const zelleEmail = 'natnachildrensfoundation@gmail.com'
-  
+
+  useEffect(() => {
+    if (document.querySelector('script[src*="buy-button.js"]')) return
+    const script = document.createElement('script')
+    script.src = 'https://js.stripe.com/v3/buy-button.js'
+    script.async = true
+    document.head.appendChild(script)
+  }, [])
+
   const copyEmail = () => {
     navigator.clipboard.writeText(zelleEmail)
     setCopied(true)
@@ -17,13 +25,14 @@ export default function Donate() {
   
   const DonateButtons = () => (
     <>
-      <div className="donate-buttons">
-        <button className="donate-btn">$25</button>
-        <button className="donate-btn featured">$50</button>
-        <button className="donate-btn">$100</button>
+      <div className="stripe-donate-wrapper">
+        <stripe-buy-button
+          buy-button-id="buy_btn_1TD6RtQQkg3V48JvuLQaeE5k"
+          publishable-key="pk_live_51T65F9QQkg3V48JvfdqFzVDxV3Dd3DfGKPQACXQ0GpSWaaOREXu2eyhSj6FeAnJBv4NLrdBJdchhkozyn50ZjaLC00c3vzOsHH"
+        >
+        </stripe-buy-button>
       </div>
-      <button className="donate-btn-custom">Custom Amount</button>
-      
+
       <div className="donate-divider">
         <span>or donate via</span>
       </div>
@@ -46,7 +55,7 @@ export default function Donate() {
         </div>
       )}
       
-      <p className="donate-note">All donations are tax-deductible. We are a registered 501(c)(3).</p>
+      <p className="donate-note" style={{ marginBottom: '2rem' }}>All donations are tax-deductible. We are a registered 501(c)(3).</p>
     </>
   )
   
@@ -55,7 +64,6 @@ export default function Donate() {
       <div className="container">
         {/* Make a Difference - Mobile First */}
         <div className="donate-form-mobile">
-          <h2>Make a Difference Today</h2>
           <DonateButtons />
         </div>
         
@@ -68,7 +76,6 @@ export default function Donate() {
             </p>
             
             <div className="donate-form-desktop">
-              <h2>Make a Difference Today</h2>
               <DonateButtons />
             </div>
             
@@ -88,15 +95,15 @@ export default function Donate() {
               <div className="impact-examples">
                 <div className="impact-item">
                   <h3>$25</h3>
-                  <p>Provides school supplies for one student for a month</p>
+                  <p>Provides basic school supplies — including notebooks and pens — for three students for an entire year.</p>
                 </div>
                 <div className="impact-item">
                   <h3>$50</h3>
-                  <p>Supports a family's emergency relief package</p>
+                  <p>Ensures a child receives three meals a day for a full month.</p>
                 </div>
                 <div className="impact-item">
                   <h3>$100</h3>
-                  <p>Funds a youth leadership workshop</p>
+                  <p>Provides enough flour to sustain four households for an entire month.</p>
                 </div>
               </div>
             </div>
