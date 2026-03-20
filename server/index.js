@@ -17,9 +17,10 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "https://js.stripe.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "ws:", "wss:"],
+      connectSrc: ["'self'", "ws:", "wss:", "https://api.stripe.com"],
+      frameSrc: ["'self'", "https://js.stripe.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
       upgradeInsecureRequests: null, // Disable for local dev
     },
@@ -31,6 +32,8 @@ app.use(helmet({
 
 // CORS restricted to authorized origins only
 const allowedOrigins = [
+  'https://natnacf.org',
+  'https://www.natnacf.org',
   'https://testing.natnacf.org',
   'http://localhost:3002', // Local development
   'http://localhost:3001', // Alternative local port
