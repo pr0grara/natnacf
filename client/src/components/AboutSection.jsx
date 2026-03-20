@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import educationGif from '../assets/natna_education.gif'
 import samruPhoto from '../assets/samru.jpg'
 import aramPhoto from '../assets/aram.jpg'
@@ -26,6 +27,10 @@ export default function AboutSection() {
           </div>
         </div>
         
+        <div style={{ textAlign: 'center', margin: '4rem 0' }}>
+          <Link to="/missions" className="btn-primary large">Projects</Link>
+        </div>
+
         {/* Team Bios */}
         <div className="team-section">
           <h2>Our Team</h2>
