@@ -24,6 +24,7 @@ jobs:
         run: |
           mkdir -p deploy
           cp -r server/* deploy/
+          rm -rf deploy/dist
           cp -r client/dist deploy/dist
           cd deploy
           zip -r ../app.zip . -x "node_modules/*"
