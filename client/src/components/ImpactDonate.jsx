@@ -30,9 +30,9 @@ export default function ImpactDonate() {
             <h2>Support Our Mission</h2>
             <p className="donate-subtitle">Your contribution directly transforms lives</p>
             <div className="donate-btns">
-              <Link to="/donate" className="donate-amount">$25</Link>
-              <Link to="/donate" className="donate-amount primary">$50</Link>
-              <Link to="/donate" className="donate-amount">$100</Link>
+              <a href="https://buy.stripe.com/9B68wRdoLgOS5TW7io3wQ03" className="donate-amount" target="_blank" rel="noopener noreferrer">$25/mo</a>
+              <a href="https://buy.stripe.com/9B6cN7fwT9mq824byE3wQ02" className="donate-amount primary" target="_blank" rel="noopener noreferrer">$50/mo</a>
+              <a href="https://buy.stripe.com/9B65kFaczdCG1DGbyE3wQ04" className="donate-amount" target="_blank" rel="noopener noreferrer">$100/mo</a>
             </div>
             <p className="donate-tax">Tax-deductible 501(c)(3)</p>
           </div>

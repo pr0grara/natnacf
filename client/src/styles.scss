@@ -3264,3 +3264,166 @@ html {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+// ================================
+// Donate Page — Pricing Table
+// ================================
+
+.dn-page {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 space(4) space(16);
+}
+
+// Hero
+.dn-hero {
+  text-align: center;
+  padding: space(16) 0 space(10);
+}
+
+.dn-hero__title {
+  font-size: font-size(3xl);
+  font-weight: 700;
+  color: color(text-primary);
+  margin: 0 0 space(3);
+  letter-spacing: -0.5px;
+}
+
+.dn-hero__sub {
+  font-size: font-size(md);
+  color: color(text-secondary);
+  max-width: 500px;
+  margin: 0 auto space(10);
+  line-height: 1.6;
+}
+
+// Impact pills
+.dn-impact {
+  display: flex;
+  justify-content: center;
+  gap: space(3);
+}
+
+.dn-impact__card {
+  background: color(surface);
+  border-radius: 12px;
+  padding: space(4) space(6);
+  text-align: center;
+  box-shadow: shadow(sm);
+  min-width: 160px;
+}
+
+.dn-impact__amt {
+  display: block;
+  font-size: font-size(lg);
+  font-weight: 700;
+  color: color(accent-primary);
+  margin-bottom: space(1);
+}
+
+.dn-impact__desc {
+  font-size: font-size(xs);
+  color: color(text-muted);
+  line-height: 1.4;
+}
+
+// Stripe pricing table
+.dn-pricing {
+  margin-bottom: space(12);
+}
+
+// Bottom grid
+.dn-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: space(8);
+  align-items: start;
+
+  &__media img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    box-shadow: shadow(md);
+  }
+
+  &__side {
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    box-shadow: shadow(md);
+  }
+}
+
+// Zelle
+.dn-zelle {
+  background: color(surface);
+  border-radius: 12px;
+  padding: space(6);
+  text-align: center;
+  box-shadow: shadow(sm);
+  max-width: 480px;
+  margin: 0 auto space(12);
+
+  &__label {
+    margin: 0 0 space(3);
+    font-size: font-size(sm);
+    color: color(text-muted);
+  }
+}
+
+// Tax note
+.dn-tax {
+  text-align: center;
+  color: color(text-muted);
+  font-size: font-size(xs);
+  margin-top: space(12);
+}
+
+// Responsive
+@media (max-width: map-get($breakpoints, md)) {
+  .dn-hero {
+    padding: space(10) 0 space(6);
+  }
+
+  .dn-hero__title {
+    font-size: font-size(2xl);
+  }
+
+  .dn-hero__sub {
+    font-size: font-size(sm);
+    margin-bottom: space(6);
+  }
+
+  .dn-impact {
+    gap: space(2);
+  }
+
+  .dn-impact__card {
+    padding: space(3) space(3);
+    min-width: 0;
+    flex: 1;
+  }
+
+  .dn-impact__amt {
+    font-size: font-size(md);
+  }
+
+  .dn-impact__desc {
+    font-size: 0.7rem;
+  }
+
+  .dn-pricing {
+    margin-bottom: space(8);
+  }
+
+  .dn-bottom {
+    grid-template-columns: 1fr;
+    gap: space(6);
+  }
+}
