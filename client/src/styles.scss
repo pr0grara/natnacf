@@ -2400,21 +2400,26 @@ html {
   overflow-x: hidden;
   max-width: 100vw;
   box-sizing: border-box;
-  
+
   .container {
     width: 100%;
     max-width: $container-max;
     margin: 0 auto;
     padding: 0 space(6);
     box-sizing: border-box;
-    
+    overflow-x: hidden;
+
     @media (max-width: map-get($breakpoints, md)) {
       padding: 0 space(4);
     }
-    
+
     @media (max-width: map-get($breakpoints, sm)) {
-      padding: 0 space(4);
+      padding: 0 space(3);
     }
+  }
+
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: space(12) 0;
   }
 }
 
@@ -2427,10 +2432,10 @@ html {
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
-  
+
   @media (max-width: map-get($breakpoints, md)) {
     grid-template-columns: 1fr;
-    gap: space(12);
+    gap: space(8);
     text-align: center;
   }
 }
@@ -2541,11 +2546,16 @@ html {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  
-  @media (max-width: map-get($breakpoints, sm)) {
+  overflow: hidden;
+
+  @media (max-width: map-get($breakpoints, md)) {
     padding: space(6);
     border-radius: 12px;
-    margin: 0 auto;
+  }
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(5) space(4);
+    border-radius: 12px;
   }
   
   h2 {
@@ -2600,9 +2610,9 @@ html {
   box-sizing: border-box;
   
   @media (max-width: map-get($breakpoints, sm)) {
-    padding: space(3) space(4);
-    font-size: font-size(md);
-    min-width: 70px;
+    padding: space(2) space(3);
+    font-size: font-size(sm);
+    min-width: 0;
     flex: 1;
   }
   
