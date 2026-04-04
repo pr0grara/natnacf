@@ -94,6 +94,18 @@ export default function Donate() {
         </div>
       </div>
 
+      {/* Instagram */}
+      <div className="dn-ig">
+        <a
+          href="https://www.instagram.com/natnacf/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ig-follow-link"
+        >
+          Instagram — @natnacf
+        </a>
+      </div>
+
       {/* Media section */}
       <div className="dn-bottom">
         <div className="dn-bottom__media">

@@ -755,6 +755,36 @@ p {
   }
 }
 
+// Instagram follow section
+.ig-follow-section {
+  text-align: center;
+  padding: space(8) 0;
+}
+
+.ig-follow-link {
+  @extend .btn;
+  padding: space(4) space(8);
+  font-size: font-size(md);
+  border-radius: 10px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+    color: white;
+  }
+}
+
+.footer-ig {
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: #e6683c;
+  }
+}
+
 .btn-ghost {
   @extend .btn;
   background: transparent;
@@ -3413,6 +3443,12 @@ html {
     color: color(accent-primary);
     margin-bottom: space(2);
   }
+}
+
+// Instagram on donate page
+.dn-ig {
+  text-align: center;
+  margin-bottom: space(12);
 }
 
 // Tax note

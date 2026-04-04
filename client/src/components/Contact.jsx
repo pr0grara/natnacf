@@ -15,6 +15,17 @@ export default function Contact() {
           Send Us an Email
         </button>
 
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <a
+            href="https://www.instagram.com/natnacf/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ig-follow-link"
+          >
+            Instagram — @natnacf
+          </a>
+        </div>
+
         <div className="contact-hero-image">
           <img src={classroomPhoto} alt="Students learning in classroom" />
         </div>
