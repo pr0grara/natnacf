@@ -755,10 +755,26 @@ p {
   }
 }
 
+// Home container
+.home-container {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 space(5);
+  overflow-x: hidden;
+
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 0 space(4);
+  }
+}
+
 // Instagram follow section
 .ig-follow-section {
   text-align: center;
   padding: space(8) 0;
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: space(4) 0;
+  }
 }
 
 .ig-follow-link {
@@ -3303,6 +3319,11 @@ html {
   max-width: $container-max;
   margin: 0 auto;
   padding: 0 space(4) space(16);
+  overflow-x: hidden;
+
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: 0 space(4) space(10);
+  }
 }
 
 // Hero
@@ -3499,5 +3520,25 @@ html {
   .dn-bottom {
     grid-template-columns: 1fr;
     gap: space(6);
+
+    &__media img {
+      height: 240px;
+    }
+  }
+
+  .dn-impact-section {
+    margin: 0 auto space(8);
+  }
+
+  .dn-impact-section__card {
+    padding: space(4) space(4);
+  }
+
+  .dn-ig {
+    margin-bottom: space(8);
+  }
+
+  .dn-zelle {
+    margin-bottom: space(8);
   }
 }
