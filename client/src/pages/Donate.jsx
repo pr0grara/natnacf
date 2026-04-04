@@ -77,6 +77,23 @@ export default function Donate() {
       {/* Zelle — right below pricing */}
       <ZelleSection />
 
+      {/* Your Impact */}
+      <div className="dn-impact-section">
+        <h2 className="dn-impact-section__title">Your Impact</h2>
+        <div className="dn-impact-section__card">
+          <span className="dn-impact-section__amt">$25</span>
+          <p>Provides basic school supplies — including notebooks and pens — for three students for an entire year.</p>
+        </div>
+        <div className="dn-impact-section__card">
+          <span className="dn-impact-section__amt">$50</span>
+          <p>Ensures a child receives three meals a day for a full month.</p>
+        </div>
+        <div className="dn-impact-section__card">
+          <span className="dn-impact-section__amt">$100</span>
+          <p>Provides enough flour to sustain four households for an entire month.</p>
+        </div>
+      </div>
+
       {/* Media section */}
       <div className="dn-bottom">
         <div className="dn-bottom__media">
