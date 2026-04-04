@@ -4,7 +4,6 @@ import ImpactDonate from '../components/ImpactDonate'
 import Portfolio from '../components/Portfolio'
 import AboutSection from '../components/AboutSection'
 import Contact from '../components/Contact'
-import Footer from '../components/Footer'
 
 function InstagramFollow() {
   useEffect(() => {
@@ -45,7 +44,6 @@ export default function Home() {
         <AboutSection />
         <Contact />
       </div>
-      <Footer />
     </>
   )
 }

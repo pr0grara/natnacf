@@ -14,6 +14,7 @@ import Missions from './pages/Missions'
 import Donate from './pages/Donate'
 import NotFound from './pages/NotFound'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Portfolio from './components/Portfolio'
 import ProjectNatnaAi from './pages/ProjectNatnaAi'
 import ProjectMutualAid from './pages/ProjectMutualAid'
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
   )
 }
