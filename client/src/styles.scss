@@ -2444,26 +2444,27 @@ html {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  
+  overflow: hidden;
+
   h2 {
     font-size: font-size(3xl);
     font-weight: 700;
     color: color(text-primary);
     margin-bottom: space(2);
-    
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(2xl);
+
+    @media (max-width: map-get($breakpoints, md)) {
+      font-size: font-size(xl);
     }
   }
-  
+
   .impact-subtitle {
     color: color(text-secondary);
     margin-bottom: space(8);
     font-size: font-size(base);
-    
-    @media (max-width: map-get($breakpoints, sm)) {
+
+    @media (max-width: map-get($breakpoints, md)) {
       font-size: font-size(sm);
-      margin-bottom: space(6);
+      margin-bottom: space(4);
     }
   }
 }
@@ -2475,18 +2476,12 @@ html {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow-x: hidden;
-  
+  overflow: hidden;
+
   @media (max-width: map-get($breakpoints, md)) {
     grid-template-columns: repeat(2, 1fr);
-    gap: space(4);
-    justify-items: center;
-    padding: 0 space(2);
-  }
-  
-  @media (max-width: map-get($breakpoints, sm)) {
     gap: space(3);
-    padding: 0 space(1);
+    padding: 0;
   }
 }
 
@@ -2507,12 +2502,12 @@ html {
     line-height: 1.1;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(2xl);
+
+    @media (max-width: map-get($breakpoints, md)) {
+      font-size: font-size(xl);
     }
   }
-  
+
   .stat-lbl {
     display: block;
     font-size: font-size(sm);
@@ -2522,16 +2517,10 @@ html {
     margin-top: space(1);
     overflow-wrap: break-word;
     word-wrap: break-word;
-    hyphens: none;
     max-width: 100%;
-    
+
     @media (max-width: map-get($breakpoints, md)) {
-      font-size: font-size(xs);
-      letter-spacing: 0.01em;
-    }
-    
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(xs);
+      font-size: 0.7rem;
       letter-spacing: 0;
     }
   }
@@ -2563,20 +2552,20 @@ html {
     font-weight: 700;
     color: color(text-primary);
     margin-bottom: space(2);
-    
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(xl);
+
+    @media (max-width: map-get($breakpoints, md)) {
+      font-size: font-size(lg);
     }
   }
-  
+
   .donate-subtitle {
     color: color(text-secondary);
     margin-bottom: space(6);
     font-size: font-size(base);
-    
-    @media (max-width: map-get($breakpoints, sm)) {
-      font-size: font-size(sm);
-      margin-bottom: space(4);
+
+    @media (max-width: map-get($breakpoints, md)) {
+      font-size: font-size(xs);
+      margin-bottom: space(3);
     }
   }
 }
@@ -2588,10 +2577,9 @@ html {
   margin-bottom: space(4);
   width: 100%;
   box-sizing: border-box;
-  
-  @media (max-width: map-get($breakpoints, sm)) {
+
+  @media (max-width: map-get($breakpoints, md)) {
     gap: space(2);
-    flex-wrap: nowrap;
   }
 }
 
@@ -2608,8 +2596,8 @@ html {
   min-width: 90px;
   text-align: center;
   box-sizing: border-box;
-  
-  @media (max-width: map-get($breakpoints, sm)) {
+
+  @media (max-width: map-get($breakpoints, md)) {
     padding: space(2) space(3);
     font-size: font-size(sm);
     min-width: 0;
