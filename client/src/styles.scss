@@ -1658,19 +1658,79 @@ html {
   gap: space(3);
   justify-content: center;
   align-items: center;
-  
+
   .btn.large {
     min-width: 140px;
   }
-  
+
   @media (max-width: map-get($breakpoints, sm)) {
     flex-direction: column;
     gap: space(2);
-    
+
     .btn.large {
       width: 100%;
       max-width: 200px;
     }
+  }
+}
+
+.hero-cta--stacked {
+  flex-direction: column;
+  gap: space(3);
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+
+  .btn.large,
+  .btn-secondary.large {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+.hero-donate-featured {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: space(2);
+  width: 100%;
+  padding: space(4) space(6);
+  background: color(accent-primary);
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: shadow(md);
+  transition: transform 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: color(accent-hover);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  &__amt {
+    font-size: font-size(lg);
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: font-size(sm);
+    opacity: 0.92;
+  }
+}
+
+.hero-donate-more {
+  font-size: font-size(sm);
+  color: color(text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: color(accent-primary);
   }
 }
 
@@ -2368,8 +2428,8 @@ html {
   
   .donate-btn {
     flex: 1;
-    padding: space(3) space(6);
-    font-size: font-size(lg);
+    padding: space(3) space(4);
+    font-size: font-size(md);
     font-weight: 600;
     border: 2px solid color(text-primary);
     border-radius: 10px;
@@ -2378,6 +2438,7 @@ html {
     text-decoration: none;
     transition: all 0.2s ease;
     text-align: center;
+    white-space: nowrap;
     
     &:hover {
       border-color: #3b5bdb;
@@ -2598,8 +2659,8 @@ html {
 }
 
 .donate-amount {
-  padding: space(3) space(6);
-  font-size: font-size(lg);
+  padding: space(3) space(4);
+  font-size: font-size(md);
   font-weight: 600;
   border: 2px solid #e9ecef;
   border-radius: 10px;
@@ -2610,6 +2671,7 @@ html {
   min-width: 90px;
   text-align: center;
   box-sizing: border-box;
+  white-space: nowrap;
 
   @media (max-width: map-get($breakpoints, md)) {
     padding: space(2) space(3);
@@ -3341,7 +3403,7 @@ html {
 // Hero
 .dn-hero {
   text-align: center;
-  padding: space(16) 0 space(10);
+  padding: space(16) 0 0;
 }
 
 .dn-hero__title {
@@ -3356,7 +3418,7 @@ html {
   font-size: font-size(md);
   color: color(text-secondary);
   max-width: 500px;
-  margin: 0 auto space(10);
+  margin: 0 auto space(4);
   line-height: 1.6;
 }
 
@@ -3388,6 +3450,50 @@ html {
   font-size: font-size(xs);
   color: color(text-muted);
   line-height: 1.4;
+}
+
+// Quick-give $5/month button
+.dn-quick-give {
+  max-width: 480px;
+  margin: 0 auto space(8);
+  text-align: center;
+
+  &__btn {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: space(1);
+    padding: space(3) space(6);
+    background: color(accent-primary);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: shadow(md);
+    transition: transform 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background: color(accent-hover);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__amt {
+    font-size: font-size(lg);
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: font-size(sm);
+    opacity: 0.9;
+  }
+
+  &__hint {
+    margin: space(4) 0 0;
+    font-size: font-size(sm);
+    color: color(text-muted);
+  }
 }
 
 // Stripe pricing table
@@ -3495,7 +3601,7 @@ html {
 // Responsive
 @media (max-width: map-get($breakpoints, md)) {
   .dn-hero {
-    padding: space(10) 0 space(6);
+    padding: space(10) 0 0;
   }
 
   .dn-hero__title {
@@ -3504,7 +3610,7 @@ html {
 
   .dn-hero__sub {
     font-size: font-size(sm);
-    margin-bottom: space(6);
+    margin-bottom: space(4);
   }
 
   .dn-impact {
