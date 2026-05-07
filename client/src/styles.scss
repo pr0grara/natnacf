@@ -3795,6 +3795,14 @@ html {
   color: #e8eaf0;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  // Break out of <main class="container">'s horizontal padding so the dark fill goes
+  // edge-to-edge instead of leaving white side bars from the body background.
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
 }
 
 // ── Hero with photo background ───────────────────────────────────────
@@ -3970,12 +3978,21 @@ html {
     // Pin BELOW the fixed site header (height: space(24) = 96px) so the map is fully visible.
     // Without this offset the top 96px of the map slides under the header and "half disappears".
     top: space(24);
-    height: 40vh;
-    padding: space(4);
+    // Map (4:3 aspect of full width) + year pill must fit inside without overflowing onto the
+    // next step's title. clamp keeps it tight on tall phones and prevents leak on iPhone SE.
+    height: auto;
+    min-height: 56vh;
+    padding: space(4) space(4) space(5);
     background: #0a0e1a;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
     z-index: 5;
+  }
+
+  @media (max-width: map-get($breakpoints, md)) and (min-height: 800px) {
+    // On taller phones (iPhone 14 / Pro), let the graphic breathe a bit but still cap it
+    // so we don't burn the whole viewport on a sticky map.
+    min-height: 50vh;
   }
 }
 
@@ -4061,13 +4078,13 @@ html {
 .scrollytelling-narrative {
   // Pull narrative up to overlap the sticky graphic, then offset its content to the right column.
   margin-top: -100vh;
-  padding: 30vh space(8) 30vh 58%;
+  padding: 30vh space(8) 12vh 58%;
   position: relative;
   z-index: 2;
 
   @media (max-width: map-get($breakpoints, md)) {
     margin-top: 0;
-    padding: space(8) space(5) 16vh;
+    padding: space(8) space(5) 8vh;
   }
 }
 
@@ -4179,7 +4196,7 @@ html {
 .why-tigray-cta {
   max-width: 720px;
   margin: 0 auto;
-  padding: space(20) space(6) space(32);
+  padding: space(10) space(6) space(24);
   text-align: center;
 
   h2 {
@@ -4255,10 +4272,11 @@ html {
   overflow: hidden;
 }
 
-// Desktop-only sticky overlay version — pinned to bottom-right of the map
+// Desktop-only sticky overlay version — pinned to bottom-left of the map so it doesn't
+// crowd the active-marker labels which typically render to the right of city/region dots.
 .media-card--sticky {
   position: absolute;
-  right: space(4);
+  left: space(4);
   bottom: space(4);
   width: 320px;
   max-width: calc(100% - #{space(8)});
@@ -4329,6 +4347,13 @@ html {
   &--msf,
   &--doctors-without-borders { background: #ee0000; }
   &--the-africa-report { background: #d4af37; color: #0a0e1a; }
+  &--nbc-news,
+  &--nbc { background: #fcb900; color: #0a0e1a; }
+  &--wikipedia { background: #ffffff; color: #0a0e1a; font-family: 'Georgia', serif; letter-spacing: 0; text-transform: none; }
+  &--voice-of-america,
+  &--voa { background: #00529b; }
+  &--nobelprize-org,
+  &--nobelprize { background: #f1c40f; color: #0a0e1a; font-family: 'Georgia', serif; letter-spacing: 0; text-transform: none; }
   &--un-news,
   &--un          { background: #4b92db; }
 }
@@ -4429,4 +4454,56 @@ html {
       padding-left: space(4);
     }
   }
+}
+
+// Why Tigray hides the global site header once the user is past the hero, then offers a
+// floating back-to-top arrow to bring the header back. Toggled via body classes set in
+// the WhyTigray page component.
+body.hide-header-on-scroll .site-header {
+  transition: transform 0.35s ease, opacity 0.25s ease;
+}
+body.site-header-hidden .site-header {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.why-tigray-back-to-top {
+  position: fixed;
+  top: space(5);
+  right: space(5);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(15, 19, 34, 0.85);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+
+  &:hover, &:focus-visible {
+    transform: translateY(-2px);
+    background: rgba(15, 19, 34, 0.95);
+    border-color: rgba(244, 104, 90, 0.6);
+  }
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    top: space(4);
+    right: space(4);
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// When the header is hidden, the sticky map pins to viewport top — otherwise the 96px gap
+// that was reserved for the header lets step content scroll through behind the map.
+body.site-header-hidden .scrollytelling-graphic {
+  top: 0;
 }

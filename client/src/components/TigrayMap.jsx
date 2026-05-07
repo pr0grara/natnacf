@@ -32,8 +32,9 @@ const PER_EVENT_BBOXES = {
   'isaias-visit-2020':           [[37.40, 8.50], [41.50, 16.50]],
   // Eritrea–Ethiopia peace deal: same axis frame.
   'eritrea-peace-2018':          [[37.40, 8.50], [41.50, 16.50]],
-  // Western Tigray seizure: Amhara region + Tigray + Eritrea border in one frame.
-  'western-tigray-seizure-2020': [[36.00, 9.50], [40.80, 16.50]],
+  // Western Tigray seizure: shift the bbox west so the highlighted regions sit in the right
+  // half of the map, clear of the bottom-left citation card.
+  'western-tigray-seizure-2020': [[32.50, 7.50], [40.50, 17.50]],
   // Federal attack: Addis → Tigray axis.
   'attack-launched-2020':        [[37.50, 8.50], [40.50, 14.80]],
   // ESAT joint-action call: Tigray + Eritrea.
@@ -44,6 +45,8 @@ const PER_EVENT_BBOXES = {
   'eritrea-withdraw-2021':       [[36.50, 12.00], [41.50, 17.00]],
   // Pretoria signing: Ethiopia federal + Tigray (the agreement's parties).
   'pretoria-agreement':          [[37.50, 8.50], [40.50, 14.80]],
+  // Top officials assassinated: include both Addis (where it happened) and Amhara (regional governor killed).
+  'murders-2019':                [[36.50, 8.20], [40.50, 13.50]],
 }
 
 // Tigray feature extraction
@@ -155,6 +158,16 @@ export default function TigrayMap({ activeEvent }) {
     })
 
     map.on('load', () => {
+      // Hide every label layer from the base style. OpenFreeMap's "dark" theme paints country,
+      // region, city, and POI names in multiple languages — they collide with the deliberate labels
+      // (TIGRAY, ERITREA, Mekelle, etc.) we draw ourselves. Killing the basemap symbols keeps
+      // the map readable and keeps our editorial framing in control.
+      for (const layer of map.getStyle().layers) {
+        if (layer.type === 'symbol') {
+          map.setLayoutProperty(layer.id, 'visibility', 'none')
+        }
+      }
+
       // Ethiopia base — quiet permanent fill so the country is always visible under whatever's active.
       // Distinct from Sudan / Eritrea / etc. which retain their default basemap appearance.
       map.addSource('ethiopia-base', { type: 'geojson', data: { type: 'FeatureCollection', features: ethiopiaBaseFeatures } })
@@ -177,6 +190,25 @@ export default function TigrayMap({ activeEvent }) {
           'line-opacity': 0.32,
         },
       })
+
+      // Permanent dashed-blue outline around Addis Ababa region. Highlights Ethiopia's
+      // multi-national federal structure — Addis is its own admin unit even though it's a city.
+      const addisFeature = ethiopiaBaseFeatures.find(f => f.properties?.name === 'Addis Ababa')
+      if (addisFeature) {
+        map.addSource('addis-outline', { type: 'geojson', data: addisFeature })
+        map.addLayer({
+          id: 'addis-outline',
+          type: 'line',
+          source: 'addis-outline',
+          paint: {
+            'line-color': '#7eb1d6',
+            'line-width': 2.2,
+            'line-dasharray': [3, 2],
+            'line-opacity': 0.95,
+          },
+        })
+      }
+
 
       // Active region/country highlight (blue tint for non-Tigray active locations)
       map.addSource('region-highlight', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
@@ -238,6 +270,75 @@ export default function TigrayMap({ activeEvent }) {
           'line-width': 4,
           'line-blur': 6,
           'line-opacity': 0.45,
+        },
+      })
+
+      // Persistent "TIGRAY" label — single point, anchored to the polygon's visual center.
+      // The bbox-centroid sits near the southern border because Tigray's polygon has a long
+      // southern peninsula. Visual mass is in the wider northern half, so we place the label
+      // higher in latitude (~14.0) to read as centered on the highlighted region.
+      map.addSource('tigray-label', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: { type: 'Point', coordinates: [38.45, 14.05] },
+        },
+      })
+      map.addLayer({
+        id: 'tigray-label',
+        type: 'symbol',
+        source: 'tigray-label',
+        layout: {
+          'text-field': 'TIGRAY',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 12, 8, 18, 11, 24],
+          'text-letter-spacing': 0.18,
+        },
+        paint: {
+          'text-color': '#ffffff',
+          'text-halo-color': '#7a1d10',
+          'text-halo-width': 1.4,
+        },
+      })
+
+      // Permanent country labels — we replace OpenFreeMap's removed multi-script labels
+      // with our own editorial labels for the surrounding countries, in our typography.
+      const COUNTRY_LABELS = [
+        { name: 'ETHIOPIA', lon: 39.5,  lat:  9.4 },
+        { name: 'ERITREA',  lon: 39.0,  lat: 16.0 },
+        { name: 'SUDAN',    lon: 32.5,  lat: 13.0 },
+        { name: 'S. SUDAN', lon: 30.5,  lat:  7.5 },
+        { name: 'YEMEN',    lon: 47.0,  lat: 15.5 },
+        { name: 'DJIBOUTI', lon: 42.8,  lat: 11.7 },
+        { name: 'SOMALIA',  lon: 47.0,  lat:  6.0 },
+        { name: 'KENYA',    lon: 38.0,  lat:  1.5 },
+      ]
+      map.addSource('country-labels', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: COUNTRY_LABELS.map(c => ({
+            type: 'Feature',
+            properties: { name: c.name },
+            geometry: { type: 'Point', coordinates: [c.lon, c.lat] },
+          })),
+        },
+      })
+      map.addLayer({
+        id: 'country-labels',
+        type: 'symbol',
+        source: 'country-labels',
+        layout: {
+          'text-field': ['get', 'name'],
+          'text-font': ['Noto Sans Regular'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 4, 9, 7, 12, 10, 16],
+          'text-letter-spacing': 0.18,
+        },
+        paint: {
+          'text-color': 'rgba(255, 255, 255, 0.55)',
+          'text-halo-color': '#0a0e1a',
+          'text-halo-width': 1.2,
         },
       })
 
@@ -357,19 +458,46 @@ export default function TigrayMap({ activeEvent }) {
       )
     }
 
-    // Highlight active city marker via a separate "active" source
-    const activeFC = (loc?.lon != null && !isExternal)
-      ? { type: 'FeatureCollection', features: [{ type: 'Feature', properties: { label: loc.label }, geometry: { type: 'Point', coordinates: [loc.lon, loc.lat] } }] }
+    // Highlight the active location with a marker (cities) or just a label (regions/countries).
+    // The `kind` property on the feature controls which layers paint a dot vs. only a label.
+    // Marker features: the primary location plus every actor that has a coordinate.
+    // This way Addis (or any other named city/region) gets its dot + label whenever
+    // it's referenced in an event, even if it's an actor rather than the primary subject.
+    const markerKeys = []
+    if (activeEvent?.location) markerKeys.push(activeEvent.location)
+    if (Array.isArray(activeEvent?.actors)) markerKeys.push(...activeEvent.actors)
+    const seenMarker = new Set()
+    const markerFeatures = []
+    for (const k of markerKeys) {
+      if (seenMarker.has(k)) continue
+      seenMarker.add(k)
+      const l = locations[k]
+      if (!l || l.lon == null || l.kind === 'external') continue
+      markerFeatures.push({
+        type: 'Feature',
+        properties: { label: l.label, kind: l.kind, cityDot: !!l.cityDot },
+        geometry: { type: 'Point', coordinates: [l.lon, l.lat] },
+      })
+    }
+    const activeFC = !isExternal
+      ? { type: 'FeatureCollection', features: markerFeatures }
       : { type: 'FeatureCollection', features: [] }
 
     if (map.getSource('active-marker')) {
       map.getSource('active-marker').setData(activeFC)
     } else {
       map.addSource('active-marker', { type: 'geojson', data: activeFC })
+      // Cities (and city-regions like Addis with cityDot:true) get a halo + dot.
+      // Pure regions/countries get only a label.
+      const dotFilter = ['any',
+        ['==', ['get', 'kind'], 'city'],
+        ['==', ['get', 'cityDot'], true],
+      ]
       map.addLayer({
         id: 'active-marker-halo',
         type: 'circle',
         source: 'active-marker',
+        filter: dotFilter,
         paint: {
           'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 12, 9, 26, 11, 38],
           'circle-color': '#f4685a',
@@ -381,11 +509,37 @@ export default function TigrayMap({ activeEvent }) {
         id: 'active-marker-dot',
         type: 'circle',
         source: 'active-marker',
+        filter: dotFilter,
         paint: {
           'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 4, 9, 7, 11, 9],
           'circle-color': '#ffffff',
           'circle-stroke-color': '#a92218',
           'circle-stroke-width': 2,
+        },
+      })
+      // City label sits to the right of the dot; region/country label sits centered on the polygon.
+      // 'cityDot' locations (like Addis) are treated as city for label placement.
+      const isDotted = ['any',
+        ['==', ['get', 'kind'], 'city'],
+        ['==', ['get', 'cityDot'], true],
+      ]
+      map.addLayer({
+        id: 'active-marker-label',
+        type: 'symbol',
+        source: 'active-marker',
+        layout: {
+          'text-field': ['get', 'label'],
+          'text-font': ['Noto Sans Bold'],
+          'text-size': ['case', isDotted, 13, 16],
+          'text-letter-spacing': ['case', isDotted, 0.02, 0.16],
+          'text-offset': ['case', isDotted, ['literal', [0.9, 0]], ['literal', [0, 0]]],
+          'text-anchor': ['case', isDotted, 'left', 'center'],
+          'text-allow-overlap': true,
+        },
+        paint: {
+          'text-color': '#ffffff',
+          'text-halo-color': '#0a0e1a',
+          'text-halo-width': 1.5,
         },
       })
     }
@@ -406,22 +560,6 @@ export default function TigrayMap({ activeEvent }) {
         </div>
       )}
 
-      {/* External-event card — overlays the map for events that took place outside the region */}
-      <AnimatePresence>
-        {isExternal && (
-          <motion.div
-            key={activeEvent.id}
-            className="tigray-map-external"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.4 }}
-          >
-            <span className="tigray-map-external-eyebrow">Event location</span>
-            <span className="tigray-map-external-place">{loc.label}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

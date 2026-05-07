@@ -38,11 +38,6 @@ export default function MediaCard({ media, variant = 'sticky' }) {
           {dateLabel && <span className="media-card-date">{dateLabel}</span>}
         </div>
         <h4 className="media-card-headline">{media.headline}</h4>
-        {media.url && (
-          <a className="media-card-link" href={media.url} target="_blank" rel="noopener noreferrer">
-            Read original <span aria-hidden="true">→</span>
-          </a>
-        )}
       </div>
     </motion.aside>
   )
