@@ -55,6 +55,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="nav-links desktop-nav">
             <Link to="/">Home</Link>
+            <Link to="/why-tigray">Why Tigray?</Link>
             <Link to="/donate">Donate</Link>
             <Link to="/missions">Programs & Projects</Link>
             <Link to="/about">About Us</Link>
@@ -79,6 +80,7 @@ export default function Header() {
       <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav">
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <Link to="/why-tigray" onClick={() => setIsMobileMenuOpen(false)}>Why Tigray?</Link>
           <Link to="/donate" onClick={() => setIsMobileMenuOpen(false)}>Donate</Link>
           <Link to="/missions" onClick={() => setIsMobileMenuOpen(false)}>Programs & Projects</Link>
           <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>

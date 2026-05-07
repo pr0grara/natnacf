@@ -18,6 +18,7 @@ import Footer from './components/Footer'
 import Portfolio from './components/Portfolio'
 import ProjectNatnaAi from './pages/ProjectNatnaAi'
 import ProjectMutualAid from './pages/ProjectMutualAid'
+import WhyTigray from './pages/WhyTigray'
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/missions" element={<Portfolio />} />
           <Route path="/projects/natna-ai" element={<ProjectNatnaAi />} />
           <Route path="/projects/mutual-aid" element={<ProjectMutualAid />} />
+          <Route path="/why-tigray" element={<WhyTigray />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/donate" element={<Donate />} />
