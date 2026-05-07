@@ -290,44 +290,9 @@ export default function TigrayMap({ activeEvent }) {
         },
       })
 
-      // Major cities reference layer
-      const cityFeatures = Object.entries(locations)
-        .filter(([k, l]) => l.lon != null && l.lat != null)
-        .map(([k, l]) => ({
-          type: 'Feature',
-          properties: { id: k, label: l.label },
-          geometry: { type: 'Point', coordinates: [l.lon, l.lat] },
-        }))
-      map.addSource('cities', { type: 'geojson', data: { type: 'FeatureCollection', features: cityFeatures } })
-      map.addLayer({
-        id: 'cities-dot',
-        type: 'circle',
-        source: 'cities',
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 1.5, 9, 3, 11, 5],
-          'circle-color': '#ffffff',
-          'circle-stroke-color': '#a92218',
-          'circle-stroke-width': 1.4,
-          'circle-opacity': 0.9,
-        },
-      })
-      map.addLayer({
-        id: 'cities-label',
-        type: 'symbol',
-        source: 'cities',
-        layout: {
-          'text-field': ['get', 'label'],
-          'text-font': ['Noto Sans Regular'],
-          'text-size': 11,
-          'text-offset': [0.8, 0],
-          'text-anchor': 'left',
-        },
-        paint: {
-          'text-color': '#ffffff',
-          'text-halo-color': '#0a0e1a',
-          'text-halo-width': 1.2,
-        },
-      })
+      // Cities are now rendered only when they're the active event's location (see active-marker
+      // layer below). The previous always-on city-dots layer made unrelated cities (Togoga, etc.)
+      // visible during events that don't reference them.
 
       setStyleLoaded(true)
     })
