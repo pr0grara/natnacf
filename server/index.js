@@ -19,10 +19,12 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "https://js.stripe.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "ws:", "wss:", "https://api.stripe.com"],
+      // MapLibre fetches vector tile manifests + tiles from openfreemap.org and OSM tile CDNs.
+      connectSrc: ["'self'", "ws:", "wss:", "https://api.stripe.com", "https://tiles.openfreemap.org", "https://*.openfreemap.org"],
+      workerSrc: ["'self'", "blob:"], // MapLibre uses Web Workers for tile decoding.
       frameSrc: ["'self'", "https://js.stripe.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-      upgradeInsecureRequests: null, // Disable for local dev
+      upgradeInsecureRequests: null,
     },
   },
   hsts: false,
