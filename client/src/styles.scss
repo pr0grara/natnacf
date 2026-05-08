@@ -3982,7 +3982,7 @@ html {
     // iPhone SE or leaves dead space on bigger phones — both eat real estate the
     // narrative needs.
     height: auto;
-    padding: space(3) space(4) space(4);
+    padding: space(3) space(4);
     background: #0a0e1a;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
@@ -4051,22 +4051,38 @@ html {
 }
 
 .active-year {
-  margin-top: space(5);
-  font-size: 22px;
-  letter-spacing: 0.4em;
+  // Always absolute so the pill never participates in the stage's flex flow
+  // (which would stretch it to match the map's height).
+  position: absolute;
   font-weight: 700;
   color: #fff;
   font-variant-numeric: tabular-nums;
   background: rgba(255, 255, 255, 0.06);
-  padding: space(2) space(5);
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 3;
+
+  // Desktop: centered just below the map.
+  left: 50%;
+  bottom: -56px;
+  transform: translateX(-50%);
+  font-size: 22px;
+  letter-spacing: 0.4em;
+  padding: space(2) space(5);
 
   @media (max-width: map-get($breakpoints, md)) {
-    font-size: 14px;
-    letter-spacing: 0.3em;
-    margin-top: space(3);
-    padding: 6px space(3);
+    // Mobile: small overlay anchored to the bottom-right of the map itself so we
+    // don't burn a separate row of vertical space on the year display.
+    left: auto;
+    transform: none;
+    right: space(3);
+    bottom: space(3);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    padding: 4px 10px;
+    background: rgba(10, 14, 26, 0.78);
+    border-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
   }
 }
 

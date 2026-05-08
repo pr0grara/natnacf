@@ -112,19 +112,19 @@ export default function WhyTigray() {
                   <MediaCard key={activeEvent.id} media={activeEvent.media} variant="sticky" />
                 )}
               </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeEvent.id}
+                  className="active-year"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {activeEvent.dateLabel}
+                </motion.div>
+              </AnimatePresence>
             </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeEvent.id}
-                className="active-year"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
-              >
-                {activeEvent.dateLabel}
-              </motion.div>
-            </AnimatePresence>
           </div>
         </div>
 
