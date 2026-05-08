@@ -3978,21 +3978,15 @@ html {
     // Pin BELOW the fixed site header (height: space(24) = 96px) so the map is fully visible.
     // Without this offset the top 96px of the map slides under the header and "half disappears".
     top: space(24);
-    // Map (4:3 aspect of full width) + year pill must fit inside without overflowing onto the
-    // next step's title. clamp keeps it tight on tall phones and prevents leak on iPhone SE.
+    // Size to content (map + year pill). A fixed vh height either truncates the pill on
+    // iPhone SE or leaves dead space on bigger phones — both eat real estate the
+    // narrative needs.
     height: auto;
-    min-height: 56vh;
-    padding: space(4) space(4) space(5);
+    padding: space(3) space(4) space(4);
     background: #0a0e1a;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
     z-index: 5;
-  }
-
-  @media (max-width: map-get($breakpoints, md)) and (min-height: 800px) {
-    // On taller phones (iPhone 14 / Pro), let the graphic breathe a bit but still cap it
-    // so we don't burn the whole viewport on a sticky map.
-    min-height: 50vh;
   }
 }
 
@@ -4069,9 +4063,10 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   @media (max-width: map-get($breakpoints, md)) {
-    font-size: 16px;
+    font-size: 14px;
+    letter-spacing: 0.3em;
     margin-top: space(3);
-    padding: space(1) space(4);
+    padding: 6px space(3);
   }
 }
 
