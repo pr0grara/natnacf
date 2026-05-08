@@ -4054,6 +4054,9 @@ html {
   // Always absolute so the pill never participates in the stage's flex flow
   // (which would stretch it to match the map's height).
   position: absolute;
+  // Long date labels (e.g. "Jul 2021–Nov 2022") were wrapping mid-pill on desktop because
+  // of the 0.4em letter-spacing. Pin to one line and let the pill grow horizontally instead.
+  white-space: nowrap;
   font-weight: 700;
   color: #fff;
   font-variant-numeric: tabular-nums;
