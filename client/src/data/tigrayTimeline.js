@@ -552,6 +552,35 @@ export const tigrayTimeline = [
     },
   },
   {
+    id: 'siege-and-famine-2021-2022',
+    year: 'July 2021 – November 2022',
+    dateLabel: 'Jul 2021–Nov 2022',
+    title: 'Total siege; mass starvation begins',
+    body: 'After the TDF retakes Mekelle, Ethiopian, Eritrean, and Amhara forces lock Tigray under a near-total blockade for the next 16 months. Banking, telecoms, electricity, fuel, and humanitarian aid are cut off. The UN reports that only 14% of needed aid is making it through, with almost no medicine reaching the region\'s six million people. The Associated Press confirms the first starvation deaths in every district of Tigray that aid workers can still reach.',
+    location: 'tigray',
+    category: 'humanitarian',
+    // 'ethiopia-rest' is a special actor key that highlights every Ethiopian region except
+    // Tigray, showing the rest of the country closing in around it. Combined with Eritrea
+    // to the north, this paints the full encirclement.
+    actors: ['eritrea', 'ethiopia-rest'],
+    milestonesTitle: 'What the siege did',
+    milestones: [
+      'An estimated 600,000 to 800,000 people die from war, massacres, and the engineered famine (Ghent University researchers, with subsequent peer-reviewed work corroborating the scale).',
+      'Conflict-related sexual violence is widespread. A community-based study published in BMJ Global Health finds 9.7% of women of reproductive age in Tigray were sexually assaulted during the war, and 68% of rape survivors reported being gang-raped.',
+      'IPC assesses that over 350,000 people are in catastrophic famine conditions and 5.5 million (more than 60% of Tigray\'s population) face acute food insecurity.',
+      'The health system collapses. Ayder Hospital and other facilities run out of antibiotics, oxygen, dialysis supplies, and chemotherapy drugs.',
+      'Aid trucks are systematically blocked, looted, or attacked. The UN slashes its Tigray operations after staff are denied entry and accused of partisanship by federal authorities.',
+    ],
+    media: {
+      outlet: 'NPR',
+      headline: "'I Just Cry': Dying of Hunger in Ethiopia's Blockaded Tigray Region",
+      date: '2021-09-20',
+      url: 'https://www.npr.org/2021/09/20/1038858345/i-just-cry-dying-of-hunger-in-ethiopias-blockaded-tigray-region',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Internally_displaced_people_in_Shire_Tigray_April_2021_05.jpg',
+      imageAlt: 'Tigrayan civilians displaced by the war shelter at a camp in Shire, April 2021',
+    },
+  },
+  {
     id: 'pretoria-agreement',
     year: 'November 2, 2022',
     dateLabel: 'Nov 2022',

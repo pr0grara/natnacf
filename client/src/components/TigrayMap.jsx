@@ -28,6 +28,9 @@ const EXTERNAL_BBOX = [[36.5, 11.5], [41.0, 16.0]]
 
 // Per-event bbox overrides for scenes that span multiple regions/actors.
 const PER_EVENT_BBOXES = {
+  // Opening event: frame Tigray AND central Ethiopia so both editorial labels read,
+  // grounding the viewer geographically before the timeline narrows in.
+  'bombs-1943':                  [[34.0, 8.0], [42.0, 15.2]],
   // Isaias visit: Addis ↔ Eritrea axis — both visibly framed.
   'isaias-visit-2020':           [[37.40, 8.50], [41.50, 16.50]],
   // Eritrea–Ethiopia peace deal: same axis frame.
@@ -58,6 +61,32 @@ const ethiopiaBaseFeatures = hornMap.features.filter(
   f => f.properties?.kind === 'eth-region' && !f.properties?.isTigray
 )
 
+// Editorial country labels (replaces OpenFreeMap's stripped multi-script symbol labels).
+// Hoisted to module scope so the per-event effect can rebuild this layer's source data,
+// dropping the always-on label for whichever country is the active actor (otherwise the
+// active-marker label and the always-on label render on top of each other).
+const COUNTRY_LABELS = [
+  { name: 'ETHIOPIA', lon: 39.5,  lat:  9.4 },
+  { name: 'ERITREA',  lon: 39.0,  lat: 16.0 },
+  { name: 'SUDAN',    lon: 32.5,  lat: 13.0 },
+  { name: 'S. SUDAN', lon: 30.5,  lat:  7.5 },
+  { name: 'YEMEN',    lon: 47.0,  lat: 15.5 },
+  { name: 'DJIBOUTI', lon: 42.8,  lat: 11.7 },
+  { name: 'SOMALIA',  lon: 47.0,  lat:  6.0 },
+  { name: 'KENYA',    lon: 38.0,  lat:  1.5 },
+]
+
+const countryLabelFC = (excludeNames = new Set()) => ({
+  type: 'FeatureCollection',
+  features: COUNTRY_LABELS
+    .filter(c => !excludeNames.has(c.name))
+    .map(c => ({
+      type: 'Feature',
+      properties: { name: c.name },
+      geometry: { type: 'Point', coordinates: [c.lon, c.lat] },
+    })),
+})
+
 // Find a highlight feature for a location key (one entry from the locations table).
 // Returns a GeoJSON Feature or null. Skips Tigray (which has its own dedicated red layer).
 function highlightFeatureForLocation(locKey) {
@@ -75,17 +104,26 @@ function highlightFeatureForLocation(locKey) {
 
 // Build the FeatureCollection of all highlighted regions for an event:
 // the primary location (if it's a non-Tigray region/country) plus every entry in event.actors.
+// Special actor key: 'ethiopia-rest' highlights every Ethiopian region except Tigray (used for
+// events where the rest of Ethiopia closes around Tigray, e.g. the 2021–22 siege).
 function highlightFeaturesForEvent(event) {
   if (!event) return []
   const keys = []
   if (event.location) keys.push(event.location)
   if (Array.isArray(event.actors)) keys.push(...event.actors)
-  // De-duplicate, drop Tigray (has its own layer), drop external/city-only locations
   const seen = new Set()
   const out = []
   for (const k of keys) {
     if (seen.has(k)) continue
     seen.add(k)
+    if (k === 'ethiopia-rest') {
+      for (const f of hornMap.features) {
+        if (f.properties?.kind === 'eth-region' && !f.properties?.isTigray) {
+          out.push(f)
+        }
+      }
+      continue
+    }
     const f = highlightFeatureForLocation(k)
     if (f) out.push(f)
   }
@@ -137,7 +175,9 @@ export default function TigrayMap({ activeEvent }) {
       map = new maplibregl.Map({
         container: containerRef.current,
         style: STYLE_URL,
-        bounds: BBOXES.tigray,
+        // Match the opening event's bbox so the very first paint shows Ethiopia + Tigray
+        // both labeled, before scrollama animates into subsequent events.
+        bounds: PER_EVENT_BBOXES['bombs-1943'],
         fitBoundsOptions: { padding: 28 },
         // Attribution is rendered as a static line in the page (see WhyTigray.jsx footer area)
         // so it doesn't crowd the map. License compliance preserved.
@@ -302,28 +342,14 @@ export default function TigrayMap({ activeEvent }) {
         },
       })
 
-      // Permanent country labels — we replace OpenFreeMap's removed multi-script labels
-      // with our own editorial labels for the surrounding countries, in our typography.
-      const COUNTRY_LABELS = [
-        { name: 'ETHIOPIA', lon: 39.5,  lat:  9.4 },
-        { name: 'ERITREA',  lon: 39.0,  lat: 16.0 },
-        { name: 'SUDAN',    lon: 32.5,  lat: 13.0 },
-        { name: 'S. SUDAN', lon: 30.5,  lat:  7.5 },
-        { name: 'YEMEN',    lon: 47.0,  lat: 15.5 },
-        { name: 'DJIBOUTI', lon: 42.8,  lat: 11.7 },
-        { name: 'SOMALIA',  lon: 47.0,  lat:  6.0 },
-        { name: 'KENYA',    lon: 38.0,  lat:  1.5 },
-      ]
+      // Permanent country labels — replace OpenFreeMap's stripped multi-script labels with
+      // our own editorial labels for the surrounding countries, in our typography. The
+      // source data is rebuilt per event so we can drop the always-on label for whichever
+      // country is the active actor (the active-marker layer draws a more prominent label
+      // for that country, and showing both stacked them on top of each other).
       map.addSource('country-labels', {
         type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: COUNTRY_LABELS.map(c => ({
-            type: 'Feature',
-            properties: { name: c.name },
-            geometry: { type: 'Point', coordinates: [c.lon, c.lat] },
-          })),
-        },
+        data: countryLabelFC(),
       })
       map.addLayer({
         id: 'country-labels',
@@ -446,6 +472,22 @@ export default function TigrayMap({ activeEvent }) {
     const highlightSource = map.getSource('region-highlight')
     if (highlightSource) {
       highlightSource.setData({ type: 'FeatureCollection', features: highlightFeatures })
+    }
+
+    // Rebuild always-on country labels, excluding any country whose editorial label is
+    // already being drawn by the active-marker layer (otherwise the two stack on top of
+    // each other and the muted always-on label peeks out from under the bright active one).
+    const activeCountryLabels = new Set()
+    const actorKeys = []
+    if (activeEvent?.location) actorKeys.push(activeEvent.location)
+    if (Array.isArray(activeEvent?.actors)) actorKeys.push(...activeEvent.actors)
+    for (const k of actorKeys) {
+      const l = locations[k]
+      if (l?.kind === 'country' && l.label) activeCountryLabels.add(l.label)
+    }
+    const countryLabelsSource = map.getSource('country-labels')
+    if (countryLabelsSource) {
+      countryLabelsSource.setData(countryLabelFC(activeCountryLabels))
     }
 
     // Update troop / movement line for the active event

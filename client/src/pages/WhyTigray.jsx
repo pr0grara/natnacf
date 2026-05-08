@@ -72,9 +72,9 @@ export default function WhyTigray() {
           <p className="why-tigray-eyebrow">A timeline of Tigray</p>
           <h1>80 years.</h1>
           <p className="why-tigray-lede">
-            For decades, Tigray has endured attacks, siege, forced displacement, and most
-            recently (2020–2023) an active genocide the world chose to look away from. Its
-            people keep rebuilding.
+            For decades, Tigray, Ethiopia has endured violent oppression by the Ethiopian
+            federal authority. Siege, starvation, and most recently (2020–2023) an active
+            genocide the world chose to look away from. Its people keep rebuilding.
           </p>
           <p className="why-tigray-lede why-tigray-lede--cta">
             Scroll the timeline that shaped the communities Natna serves today.
